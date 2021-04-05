@@ -11,6 +11,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 import argparse
+import logging
 
 # TODO : ADD AN ASSERT TEXT OR ELEMENT FUNCTION
 
@@ -644,8 +645,28 @@ def main():
     parser.add_argument(
         '--button', help='Button to click', default='Search', required=False
     )
+    parser.add_argument(
+        '-q', '--quiet', action='store_true', help='no browser = headless'
+    )
+    parser.add_argument(
+            '-v',
+            '--verbosity',
+            action='count',
+            default=0,
+            help='increase output verbosity',
+        )
     args = parser.parse_args()
-    aton = Browser()
+
+    verbosity = {
+            0: logging.ERROR,
+            1: logging.WARNING,
+            2: logging.INFO,
+            3: logging.DEBUG,
+        }.get(args.verbosity, logging.DEBUG)
+    logging.getLogger().setLevel(verbosity)
+    logging.debug(args)
+
+    aton = Browser(showWindow=not args.quiet)
     aton.go_to(args.url)
     aton.type(args.text, into=args.button)
     aton.press(aton.Key.ENTER)
