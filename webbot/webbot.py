@@ -10,6 +10,7 @@ from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
+import argparse
 
 # TODO : ADD AN ASSERT TEXT OR ELEMENT FUNCTION
 
@@ -64,7 +65,10 @@ class Browser:
             driverfilename = 'chrome_mac'
         driverpath = os.path.join(os.path.split(__file__)[0], 'drivers{0}{1}'.format(os.path.sep, driverfilename))
 
-        os.chmod(driverpath, 0o755)
+        try:
+            os.chmod(driverpath, 0o755)
+        except Exception as e:
+            print(f'Error during os.chmod({driverpath}, 0o755)): {e}')
 
         self.driver = webdriver.Chrome(executable_path=driverpath, options=options)
         self.Key = Keys
@@ -623,8 +627,30 @@ class Browser:
                 '''.format(element.tag_name, element.id, element.get_attribute('class'), element.get_attribute('id')))
 
 
-if __name__ == '__main__':
+def main():
+    parser = argparse.ArgumentParser(
+	description='Open browser with URL',
+	formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        '--url',
+        help='Which url to open',
+        default='https://google.com',
+        required=False,
+    )
+    parser.add_argument(
+        '--text', help='Text to type', default='openremote', required=False
+    )
+    parser.add_argument(
+        '--button', help='Button to click', default='Search', required=False
+    )
+    args = parser.parse_args()
     aton = Browser()
-    aton.go_to('https://google.com')
-    aton.type("Hello its me ", into="Search")
+    aton.go_to(args.url)
+    aton.type(args.text, into=args.button)
     aton.press(aton.Key.ENTER)
+    input('Press ENTER to quit')
+
+
+if __name__ == '__main__':
+    exit(main())
