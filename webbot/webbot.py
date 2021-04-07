@@ -65,7 +65,7 @@ class Browser:
         elif sys.platform == 'darwin':
             driverfilename = 'chrome_mac'
         driverpath = os.path.join(os.path.split(__file__)[0], 'drivers{0}{1}'.format(os.path.sep, driverfilename))
-
+        logging.info(f'{__file__}:{driverpath}')
         try:
             os.chmod(driverpath, 0o755)
         except Exception as e:
