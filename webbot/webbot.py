@@ -39,10 +39,12 @@ class Browser:
         - List containing all the errors which might have occurred during performing an action like click ,type etc.
     """
 
-    def __init__(self, showWindow=True, proxy=None , downloadPath:str=None):
+    def __init__(self, showWindow=True, proxy=None, downloadPath:str=None, browser_options=[]):
         options = webdriver.ChromeOptions()
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--no-sandbox")
+        for option in browser_options:
+            options.add_argument(f'--{option}')
         if downloadPath is not None and isinstance(downloadPath,str):
             absolutePath = os.path.abspath(downloadPath)
             if(not os.path.isdir(absolutePath)):
@@ -655,6 +657,12 @@ def main():
             default=0,
             help='increase output verbosity',
         )
+    parser.add_argument(
+        '--browser-options',
+        type=str,
+        nargs='*',
+        help="additional options without '--'"
+    )
     args = parser.parse_args()
 
     verbosity = {
@@ -664,9 +672,9 @@ def main():
             3: logging.DEBUG,
         }.get(args.verbosity, logging.DEBUG)
     logging.getLogger().setLevel(verbosity)
-    logging.debug(args)
+    logging.info(args)
 
-    aton = Browser(showWindow=not args.quiet)
+    aton = Browser(showWindow=not args.quiet, browser_options=args.browser_options)
     aton.go_to(args.url)
     aton.type(args.text, into=args.button)
     aton.press(aton.Key.ENTER)
