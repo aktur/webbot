@@ -9,6 +9,7 @@ from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
 
 import argparse
 import logging
@@ -59,21 +60,9 @@ class Browser:
             options.headless = True
             options.add_argument("--headless")
 
-        driverfilename = ''
-        if sys.platform == 'linux' or sys.platform == 'linux2':
-            driverfilename = 'chrome_linux'
-        elif sys.platform == 'win32':
-            driverfilename = 'chrome_windows.exe'
-        elif sys.platform == 'darwin':
-            driverfilename = 'chrome_mac'
-        driverpath = os.path.join(os.path.split(__file__)[0], 'drivers{0}{1}'.format(os.path.sep, driverfilename))
-        logging.info(f'{__file__}:{driverpath}')
-        try:
-            os.chmod(driverpath, 0o755)
-        except Exception as e:
-            print(f'Error during os.chmod({driverpath}, 0o755)): {e}')
-
-        self.driver = webdriver.Chrome(executable_path=driverpath, options=options)
+        os.environ['WDM_LOG_LEVEL'] = '0' # log_level=0 doesn't work
+        # TODO add other browsers, e.g. chromium, firefox, edge, etc. https://github.com/SergeyPirogov/webdriver_manager
+        self.driver = webdriver.Chrome(ChromeDriverManager(path='/tmp/chromedriver', print_first_line=False, log_level=0).install())
         self.Key = Keys
         self.errors = []
 
@@ -674,7 +663,8 @@ def main():
     logging.getLogger().setLevel(verbosity)
     logging.info(args)
 
-    aton = Browser(showWindow=not args.quiet, browser_options=args.browser_options)
+    aton = Browser(showWindow=not args.quiet, browser_options=args.browser_options) if args.browser_options else Browser(showWindow=not args.quiet)
+
     aton.go_to(args.url)
     aton.type(args.text, into=args.button)
     aton.press(aton.Key.ENTER)
