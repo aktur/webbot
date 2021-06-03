@@ -40,7 +40,7 @@ class Browser:
         - List containing all the errors which might have occurred during performing an action like click ,type etc.
     """
 
-    def __init__(self, showWindow=True, proxy=None, downloadPath:str=None, browser_options=[]):
+    def __init__(self, showWindow=True, proxy=None, downloadPath:str='/tmp', browser_options=[]):
         options = webdriver.ChromeOptions()
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--no-sandbox")
