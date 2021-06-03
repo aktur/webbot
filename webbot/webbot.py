@@ -44,6 +44,7 @@ class Browser:
         options = webdriver.ChromeOptions()
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--no-sandbox")
+        options.add_argument("--user-data-dir=/tmp")
         for option in browser_options:
             options.add_argument(f'--{option}')
         if downloadPath is not None and isinstance(downloadPath,str):
