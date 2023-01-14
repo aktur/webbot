@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oronium"
-version = "1.0.6"
+version = "1.0.7"
 description = "Webbot selenium driver for testing openremote"
 authors = ["Michal Rutka <michal@openremote.io>"]
 maintainers = ["OpenRemote <developers@openremote.io>"]
@@ -13,9 +13,9 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 selenium = "^3.141.0"
-webdriver-manager = ">= 3.4, <= 3.5.4"
+webdriver-manager = ">= 3.8.5"
 
 [tool.poetry.dev-dependencies]
 behave = "^1.2.6"
