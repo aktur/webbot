@@ -59,7 +59,7 @@ class Browser:
 
         if not showWindow:
             options.headless = True
-            options.add_argument("--headless")
+            options.add_argument("--headless=new")
 
         os.environ['WDM_LOG_LEVEL'] = '0' # log_level=0 doesn't work
         # TODO add other browsers, e.g. chromium, firefox, edge, etc. https://github.com/SergeyPirogov/webdriver_manager

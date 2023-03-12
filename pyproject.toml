@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oronium"
-version = "1.0.7"
+version = "1.0.8"
 description = "Webbot selenium driver for testing openremote"
 authors = ["Michal Rutka <michal@openremote.io>"]
 maintainers = ["OpenRemote <developers@openremote.io>"]
