@@ -63,7 +63,7 @@ class Browser:
 
         os.environ['WDM_LOG_LEVEL'] = '0' # log_level=0 doesn't work
         # TODO add other browsers, e.g. chromium, firefox, edge, etc. https://github.com/SergeyPirogov/webdriver_manager
-        self.driver = webdriver.Chrome(ChromeDriverManager(path='/tmp/chromedriver').install(), options=options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         self.Key = Keys
         self.errors = []
 
