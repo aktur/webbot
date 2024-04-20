@@ -6,7 +6,7 @@ authors = ["Michal Rutka <michal@openremote.io>"]
 maintainers = ["Michal <michal@openremote.io>"]
 repository = "https://github.com/aktur/webbot"
 keywords = ['webbot', 'selenium', 'chromium']
-classifiers = ["Topic :: Home Automation ", "Topic :: Utilities "]
+# classifiers = ["Topic :: Home Automation ", "Topic :: Utilities "]
 license = "AGPLv3"
 packages = [
     { include="webbot", from="." },
@@ -15,7 +15,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 selenium = "^3.141.0"
-#webdriver-manager = "==3.8.5"
 webdriver-manager = "==4.0.1"
 urllib3 = "==1.26.14"
 
